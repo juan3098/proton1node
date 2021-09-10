@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="productos.js"></script>
+    <link rel="stylesheet" href="../public/productos.css">
+    <title>Inventario</title>
+</head>
+
+<style>
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.title{
+    margin: 10px auto;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.agregar_elemento{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    width: 900px;
+    padding: 10px 30px;
+    text-align: center;
+    background-color: rgba(128, 128, 128, 0.315);
+    display: flex;
+    border: 1px solid black;
+    margin: 10px auto;
+}
+
+.agregar_elemento td, .dato{
+    width: 150px;
+    height: 30px;
+    padding: 5px 0;
+    outline: none;
+    text-align: center;
+}
+
+.inventario{
+    margin: 10px auto;
+    text-align: center;
+}
+
+.inventario thead tr th{
+    width: 150px;
+    background-color: blue;
+    color: white;
+}
+
+.buscar{
+    width: 200px;
+    height: 20px;
+    
+}
+
+.btn{
+    width: 70px;
+    height: 20px;
+}
+
+.btn-edit{
+    background-color: #b2d0e0;
+    border-color:#2fa4e7
+}
+
+.btn-del{
+    background-color:#d8b39c;
+    border-color:#dd5600;
+}
+
+.boton1{
+    transition: 0.3s;
+    text-decoration: none;
+    padding: 5px auto;
+    color: #ffffff;
+    border-radius: 5px;
+    background-color: #1883ba;
+    border: 1px solid #0016b0;
+  }
+
+.boton1:hover{
+    transition: 0.3s;
+    color: #1883ba;
+    background-color: #ffffff;
+}
+</style>
+
+<body>
+    <header class="title">
+        <h1>Inventario</h1>
+    </header>
+    <div class="agregar_elemento">
+        <!-- Formulario para agregar nuevos articulos-->
+        <form action="/productos/add" method="post">
+            <h2> Agregar Articulo </h2>
+            <table>
+                <tr>
+                    <td>Codigo</td>
+                    <td><input type="text" class="dato" name="codigo"></td>
+                    <td>Nombre</td>
+                    <td><input type="text" class="dato" name="nombre"></td>
+                    <td>Proveedor</td>
+                    <td><input type="text" class="dato" name="proveedor"></td>
+                </tr>
+                <tr>
+                    <td colspan="6"><input type="submit" value="Agregar" class="boton1 dato"></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <!-- Tabla que se llena con los productos del inventario-->
+
+    <!-- Buscador de los articulos en la lista -->
+    <form action=""class="buscar">
+        <input type="text" name="buscar" id="buscar" placeholder="Buscar Articulo">
+    </form>
+    <table class="inventario">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Proveedor</th>
+                <th colspan="2">Opciones</th>
+            </tr>
+        </thead>
+        <tbody id="llenar_inventario">
+            {{#each productos}}
+            <tr>
+                <td>{{codigo}}</td>
+                <td>{{nombre}}</td>
+                <td>{{proveedor}}</td>
+                <td>
+                    <button class="btn btn-edit editar"> Editar </button>
+                </td>
+                <td>
+                    <form action="/productos/delete/{{id}}" onsubmit="return confirm('¿Estas seguro de eliminar?')">
+                        <button type="submit" class="btn btn-del" > Eliminar </button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+</html>
